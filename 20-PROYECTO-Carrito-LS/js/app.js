@@ -157,6 +157,8 @@ function limpiarHTML() {
 
 // Comentario de la version 3.0
 
+//Este cambio sólo lo tiene el camino2
+
 
 
 
