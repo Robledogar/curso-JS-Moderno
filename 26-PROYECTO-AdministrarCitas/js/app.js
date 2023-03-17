@@ -10,6 +10,45 @@ const sintomasInput = document.querySelector('#sintomas');
 const formulario = document.querySelector('#nueva-cita');
 const contenedorCitas = document.querySelector('#citas');
 
+// CLASES
+class Citas {
+    constructor() {
+        this.citas = [];
+    }
+
+}
+
+
+class UI {
+    imprimirAlerta(mensaje, tipo) {
+        // Crear el div
+        const divMensaje = document.createElement('div');
+        divMensaje.classList.add('text-center', 'alert', 'd-block', 'col-12');
+
+        // Agregar clase en base al tipo de error
+        if(tipo === 'error') {
+            divMensaje.classList.add('alert-danger');
+        } else {
+            divMensaje.classList.add('alert-success');
+        }
+
+        // Mensaje de error
+        divMensaje.textContent = mensaje;
+
+        //Agregar al DOM
+        document.querySelector('#contenido').insertBefore(divMensaje, document.querySelector('.agregar-cita'));
+
+        // Quitar el aviso HTML tras varios segundos
+        setTimeout(() => {
+            divMensaje.remove();
+        },5000);
+    }
+}
+
+// Las instanciamos
+const ui = new UI();
+const administrarCitas = new Citas();
+
 
 
 // REGISTRAR EVENTOS
@@ -22,6 +61,7 @@ function eventListeners() {
     horaInput.addEventListener('input', datosCita);
     sintomasInput.addEventListener('input', datosCita);
 
+    formulario.addEventListener('submit', nuevaCita);
 }
 
 
@@ -36,13 +76,27 @@ const citaObj = { //hay que asegurarse que exista "name" en el input con el mism
 }
 
 
-
-
 // AGREGA DATOS AL OBJETO DE CITA
 function datosCita(e) {
     citaObj[e.target.name] = e.target.value //introduce el valor del input dentro del objeto en el lugar correspondiente
 
-    console.log(citaObj);
+}
+
+// VALIDA Y AGREGA UNA NUEVA CITA A LA CLASE DE CITAS
+function nuevaCita(e) {
+    e.preventDefault();
+
+    // Extraer ls información del objeto de cita
+    const {mascota, propietario, telefono, fecha, hora, sintomas} = citaObj;
+
+    // Validar
+    if(mascota === '' || propietario === '' || telefono === '' || fecha === '' || hora === '' || sintomas === '') {
+        ui.imprimirAlerta('Todos los campos son obligatorios', 'error');
+
+        return;
+    }
+
+
 }
 
 
