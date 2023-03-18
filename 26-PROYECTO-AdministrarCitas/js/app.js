@@ -19,7 +19,11 @@ class Citas {
     agregarCita(cita) {
         this.citas = [...this.citas, cita];
 
-        console.log(this.citas);
+
+    }
+
+    eliminarCita(id) {
+        this.citas = this.citas.filter(cita => cita.id !== id );
     }
 
 }
@@ -53,10 +57,11 @@ class UI {
     imprimirCitas({citas}) { //también puedo hacer destructuring aquí
         
         this.limpiarHTML();
-        
+
         citas.forEach(cita => {
            const {mascota, propietario, telefono, fecha, hora, sintomas, id} = cita;
-            const divCita = document.createElement('div');
+            
+           const divCita = document.createElement('div');
             divCita.classList.add('cita', 'p-3');
             divCita.dataset.id = id;
 
@@ -90,6 +95,14 @@ class UI {
                 <span class="font-weight-bolder">Sintomas: </span> ${sintomas}
             `;
 
+            // Botón para eliminar esta cita
+            const btnEliminar = document.createElement('button');
+            btnEliminar.classList.add('btn', 'btn-danger', 'mr-2');
+            btnEliminar.innerHTML = 'Eliminar X';
+
+            btnEliminar.onclick = () =>  eliminarCita(id);
+          
+          
             // Agregar los parrafos al divCita
             divCita.appendChild(mascotaParrafo);
             divCita.appendChild(propietarioParrafo);
@@ -97,6 +110,8 @@ class UI {
             divCita.appendChild(fechaParrafo);
             divCita.appendChild(horaParrafo);
             divCita.appendChild(sintomasParrafo);
+            divCita.appendChild(btnEliminar);
+            
 
             //Agregar las citas al HTML
             contenedorCitas.appendChild(divCita);
@@ -190,6 +205,19 @@ function reiniciarObjeto() {
     citaObj.sintomas = '';
 
 }
+
+
+function eliminarCita(id) {
+    // Eliminar la cita
+    administrarCitas.eliminarCita(id);
+
+    // Muestre un mensaje
+    ui.imprimirAlerta('La cita se elimino correctamente');
+
+    // Refrescar las citas
+   ui.imprimirCitas(administrarCitas);
+}
+
 
 
 
