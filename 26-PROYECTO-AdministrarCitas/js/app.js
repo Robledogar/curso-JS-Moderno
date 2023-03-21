@@ -28,6 +28,10 @@ class Citas {
         this.citas = this.citas.filter(cita => cita.id !== id );
     }
 
+    editarCita(citaActualizada) {
+        this.citas = this.citas.map(cita => cita.id === citaActualizada.id ? citaActualizada : cita);
+    }
+
 }
 
 
@@ -200,11 +204,13 @@ function nuevaCita(e) {
 
         // Pasar el onjeto de la cita a edición
 
+        administrarCitas.editarCita({...citaObj});
 
-    formulario.querySelector('button[type="submit"]').textContent = 'Crear cita';
+        // Regresar el texto del botón a su estado original
+        formulario.querySelector('button[type="submit"]').textContent = 'Crear cita';
     
-    // Quitar modo edición
-    editando = false;
+        // Quitar modo edición
+        editando = false;
 
 
     } else {
