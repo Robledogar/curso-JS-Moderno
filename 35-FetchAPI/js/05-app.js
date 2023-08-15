@@ -5,7 +5,7 @@ async function obtenerDatos() {
 const options = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': '66f5854ed1msh082dfe15df8bad0p118981jsn61ea14f10dac',
+		'X-RapidAPI-Key': 'secret personal key',
 		'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com'
 	}
 };
