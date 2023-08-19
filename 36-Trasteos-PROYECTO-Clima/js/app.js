@@ -98,64 +98,127 @@ document.addEventListener('DOMContentLoaded', mostrarContenido);
 
 
 
-function mostrarContenido() {
+// function mostrarContenido() {
 
 
 
-const url = `https://api.hearthstonejson.com/v1/121569/esES/cards.collectible.json`
+// const url = `https://api.hearthstonejson.com/v1/121569/esES/cards.collectible.json`
 
-  fetch(url) //Hacemos un llamado
-      .then (respuesta => respuesta.json() )//Entonces quiero una respuesta de tipo json
+//   fetch(url) //Hacemos un llamado
+//       .then (respuesta => respuesta.json() )//Entonces quiero una respuesta de tipo json
       
-      .then(resultado => funcionResultado(resultado) )//Entonces quiero los resultados          
-}
+//       .then(resultado => funcionResultado(resultado) )//Entonces quiero los resultados          
+// }
 
-function funcionResultado(datos = []) {
-  console.log(datos.length)
-  console.log(datos);
+// function funcionResultado(datos = []) {
+//   console.log(datos.length)
+//   console.log(datos);
 
-  datos.forEach(dato => {
-    const{attack, name, health, rarity} = dato;
+//   datos.forEach(dato => {
+//     const{attack, name, health, rarity} = dato;
 
-    if(attack && rarity === 'LEGENDARY') {
-          const divCarta = document.createElement('DIV');
-          divCarta.classList.add('w-1/2', 'h-32', 'rounded-md', 'shadow-md', 'bg-gray-100', 'm-4', 'p-2', 'flex', 'items-center', 'justify-center', 'flex-col');
+//     if(attack) {
+//           const divCarta = document.createElement('DIV');
+//           divCarta.classList.add('w-1/2', 'h-32', 'rounded-md', 'shadow-md', 'bg-gray-100', 'm-4', 'p-2', 'flex', 'items-center', 'justify-center', 'flex-col');
 
-          const parrafoNombre = document.createElement('P');
-          parrafoNombre.classList.add('text-blue-500', 'uppercase', 'text-xl')
-          parrafoNombre.textContent = name;
+//           const parrafoNombre = document.createElement('P');
+//           parrafoNombre.classList.add('text-blue-500', 'uppercase', 'text-xl')
+//           parrafoNombre.textContent = name;
 
-          const parrafoAtaque = document.createElement('P');
-          parrafoAtaque.textContent = `Ataque: ${attack}`;
+//           const parrafoAtaque = document.createElement('P');
+//           parrafoAtaque.textContent = `Ataque: ${attack}`;
 
-          const parrafoSalud = document.createElement('P');
-          parrafoSalud.textContent = `Salud: ${health}`;
+//           const parrafoSalud = document.createElement('P');
+//           parrafoSalud.textContent = `Salud: ${health}`;
 
-          const parrafoRareza = document.createElement('P');
-          parrafoRareza.classList.add('text-red-500');
-          parrafoRareza.textContent = rarity;
+//           const parrafoRareza = document.createElement('P');
+//           parrafoRareza.classList.add('text-red-500');
+//           parrafoRareza.textContent = rarity;
 
-          divCarta.appendChild(parrafoNombre);
-          divCarta.appendChild(parrafoAtaque);
-          divCarta.appendChild(parrafoSalud);
-          divCarta.appendChild(parrafoRareza);
+//           divCarta.appendChild(parrafoNombre);
+//           divCarta.appendChild(parrafoAtaque);
+//           divCarta.appendChild(parrafoSalud);
+//           divCarta.appendChild(parrafoRareza);
 
         
-          divPrincipal.appendChild(divCarta);
+//           divPrincipal.appendChild(divCarta);
           
-        }
-    })
+//         }
+//     })
 
-        const cantidadHijos = divPrincipal.getElementsByTagName('p')
+//         const cantidadHijos = divPrincipal.getElementsByTagName('p')
 
-        console.log(`El número de resultados es: ${cantidadHijos.length}`);
+//         console.log(`El número de resultados es: ${cantidadHijos.length}`);
 
     
     
-}
+// }
 
 
 // DATOS DEL GOBIERNO
 // https://opendata.gijon.es/descargar.php?id=944&tipo=JSON
 
 
+function mostrarContenido() {
+
+
+
+  const url = `https://opendata.gijon.es/descargar.php?id=944&tipo=JSON`
+  
+    fetch(url) //Hacemos un llamado
+        .then (respuesta => respuesta.json() )//Entonces quiero una respuesta de tipo json
+        
+        .then(resultado => funcionResultado(resultado.calidadaires.calidadaire) )//Entonces quiero los resultados          
+  }
+  
+  function funcionResultado(datos = []) {
+    console.log(datos.length)
+    console.log(datos);
+
+   
+  
+    datos.forEach(dato => {
+      const{título, fecha, pm10} = dato;
+
+      if(título === 'Estación Avenida Argentina') {
+        const divCarta = document.createElement('DIV');
+            divCarta.classList.add('w-1/2', 'h-32', 'rounded-md', 'shadow-md', 'bg-gray-100', 'm-4', 'p-2', 'flex', 'items-center', 'justify-center', 'flex-col');
+  
+            const parrafoEstacion = document.createElement('P');
+            parrafoEstacion.classList.add('text-blue-500')
+            parrafoEstacion.textContent = título;
+
+            const parrafoFecha = document.createElement('P');
+            parrafoFecha.classList.add('text-xl')
+            parrafoFecha.textContent = fecha;
+
+            const parrafoParticulas = document.createElement('P');
+            parrafoParticulas.classList.add('text-xl')
+          
+              if(pm10 > 50) {
+                parrafoParticulas.classList.add('text-red-500')
+              }
+            parrafoParticulas.textContent =  `${pm10}µg/m³`;
+            
+            
+  
+            divCarta.appendChild(parrafoEstacion);
+            divCarta.appendChild(parrafoFecha);
+            divCarta.appendChild(parrafoParticulas);
+            
+  
+          
+            divPrincipal.appendChild(divCarta);
+      }
+  
+      
+            
+            
+          
+      })
+  
+          
+  
+      
+      
+}
