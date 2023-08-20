@@ -1,10 +1,16 @@
+// Dos únicos elementos del Html
+const contenedorSuperior = document.querySelector('#contenedorSuperior');
+contenedorSuperior.classList.add('flex', 'items-center', 'justify-center', 'flex-col')
+
+const contenedorInferior = document.querySelector('#contenedorInferior');
+
 // Variables para crear elementos
 const divPrincipal = document.createElement('DIV');
 divPrincipal.classList.add('flex', 'items-center', 'justify-center', 'flex-col');
 
 const divBuscador = document.createElement('DIV');
-divBuscador.classList.add('flex', 'items-center', 'flex-col', 'h-64', 'w-64', 'bg-green-100','mt-4', 'p-4');
-divBuscador.textContent = 'Selecciona una estación';
+divBuscador.classList.add('flex', 'items-center', 'flex-col', 'w-64', 'bg-gray-300','m-12', 'p-4', 'rounded');
+divBuscador.textContent = 'SELECCIONA UNA ESTACION';
 
 const selectBuscador = document.createElement('SELECT');
 selectBuscador.classList.add('m-4')
@@ -14,12 +20,12 @@ botonBuscador.classList.add('bg-blue-500', 'hover:bg-blue-600', 'text-white', 'f
 botonBuscador.textContent = 'BUSCAR'; 
 
 
-document.body.appendChild(divPrincipal);
+contenedorInferior.appendChild(divPrincipal);
 
 
 divBuscador.appendChild(selectBuscador);
 divBuscador.appendChild(botonBuscador);
-divPrincipal.appendChild(divBuscador);
+contenedorSuperior.appendChild(divBuscador);
 
 
 
@@ -226,15 +232,28 @@ botonBuscador.addEventListener('click', function() {
 
 function mostrarContenido() {
 
+  limpiarHTML(divPrincipal);
+  spinner();
 
-
-  const url = `https://opendata.gijon.es/descargar.php?id=944&tipo=JSON`
+  setTimeout(() => {
+    
+    const url = `https://opendata.gijon.es/descargar.php?id=944&tipo=JSON`
   
     fetch(url) //Hacemos un llamado
         .then (respuesta => respuesta.json() )//Entonces quiero una respuesta de tipo json
         
         .then(resultado => funcionResultado(resultado.calidadaires.calidadaire) )//Entonces quiero los resultados          
+
+   
+
+  }, 500);
+
+  
+    
+
+
   }
+  
   
   function funcionResultado(datos = []) {
     
@@ -273,11 +292,35 @@ function mostrarContenido() {
       }
      
       })
-  
-          
-  
+     
       
-      
+}
+
+function spinner() {
+
+  const divSpinner = document.createElement('div');
+  divSpinner.classList.add('sk-fading-circle');
+
+  divSpinner.innerHTML = `
+  <div class="sk-circle1 sk-circle"></div>
+  <div class="sk-circle2 sk-circle"></div>
+  <div class="sk-circle3 sk-circle"></div>
+  <div class="sk-circle4 sk-circle"></div>
+  <div class="sk-circle5 sk-circle"></div>
+  <div class="sk-circle6 sk-circle"></div>
+  <div class="sk-circle7 sk-circle"></div>
+  <div class="sk-circle8 sk-circle"></div>
+  <div class="sk-circle9 sk-circle"></div>
+  <div class="sk-circle10 sk-circle"></div>
+  <div class="sk-circle11 sk-circle"></div>
+  <div class="sk-circle12 sk-circle"></div>
+  `
+
+  contenedorSuperior.appendChild(divSpinner);
+
+  setTimeout(() => {
+    divSpinner.remove();
+  }, 1000);
 }
 
 
