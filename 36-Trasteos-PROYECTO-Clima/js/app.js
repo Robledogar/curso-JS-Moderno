@@ -2,12 +2,30 @@
 const divPrincipal = document.createElement('DIV');
 divPrincipal.classList.add('flex', 'items-center', 'justify-center', 'flex-col');
 
+const divBuscador = document.createElement('DIV');
+divBuscador.classList.add('flex', 'items-center', 'flex-col', 'h-64', 'w-64', 'bg-green-100','mt-4', 'p-4');
+divBuscador.textContent = 'Selecciona una estación';
+
+const selectBuscador = document.createElement('SELECT');
+selectBuscador.classList.add('m-4')
+
+const botonBuscador = document.createElement('BUTTON');
+botonBuscador.classList.add('bg-blue-500', 'hover:bg-blue-600', 'text-white', 'font-bold', 'py-2', 'px-4', 'rounded', 'm-4')
+botonBuscador.textContent = 'BUSCAR'; 
+
 
 document.body.appendChild(divPrincipal);
 
 
+divBuscador.appendChild(selectBuscador);
+divBuscador.appendChild(botonBuscador);
+divPrincipal.appendChild(divBuscador);
 
-document.addEventListener('DOMContentLoaded', mostrarContenido);
+
+
+document.addEventListener('DOMContentLoaded', mostrarBuscador);
+
+let valorSeleccionado;
 
 // function mostrarContenido() {
   //API Openweather
@@ -159,6 +177,53 @@ document.addEventListener('DOMContentLoaded', mostrarContenido);
 // https://opendata.gijon.es/descargar.php?id=944&tipo=JSON
 
 
+
+
+function mostrarBuscador() {
+  const url = `https://opendata.gijon.es/descargar.php?id=944&tipo=JSON`
+  
+    fetch(url) //Hacemos un llamado
+        .then (respuesta => respuesta.json() )//Entonces quiero una respuesta de tipo json
+        
+        .then(resultado => funcionResultadoParaBuscador(resultado.calidadaires.calidadaire) )//Entonces quiero los resultados          
+  }
+  
+  function funcionResultadoParaBuscador(datos = []) {
+    console.log(datos.length)
+    console.log(datos);
+    const estacionesDistintas = [];
+
+    datos.forEach(dato => {
+
+      const{título} = dato;
+      
+      if(estacionesDistintas.some(item => item.título === título)) {
+        
+      } else {
+        estacionesDistintas.push(dato);
+        const opcionDelSelect = document.createElement('OPTION');
+        opcionDelSelect.value = título;
+        opcionDelSelect.textContent = título;
+
+        selectBuscador.appendChild(opcionDelSelect);
+
+      }
+    })
+
+    console.log(estacionesDistintas);
+
+
+botonBuscador.addEventListener('click', function() {
+  valorSeleccionado = selectBuscador.value;
+  mostrarContenido();
+})
+
+}
+
+
+
+
+
 function mostrarContenido() {
 
 
@@ -172,16 +237,12 @@ function mostrarContenido() {
   }
   
   function funcionResultado(datos = []) {
-    console.log(datos.length)
-    console.log(datos);
-
-   
-  
+    
     datos.forEach(dato => {
       const{título, fecha, pm10} = dato;
 
-      if(título === 'Estación Avenida Argentina') {
-        const divCarta = document.createElement('DIV');
+      if(título === valorSeleccionado) {
+            const divCarta = document.createElement('DIV');
             divCarta.classList.add('w-1/2', 'h-32', 'rounded-md', 'shadow-md', 'bg-gray-100', 'm-4', 'p-2', 'flex', 'items-center', 'justify-center', 'flex-col');
   
             const parrafoEstacion = document.createElement('P');
@@ -210,15 +271,18 @@ function mostrarContenido() {
           
             divPrincipal.appendChild(divCarta);
       }
-  
-      
-            
-            
-          
+     
       })
   
           
   
       
       
+}
+
+
+function limpiarHTML(selector) {
+  while(selector.firstChild) {
+      selector.removeChild(selector.firstChild);
+  }
 }
