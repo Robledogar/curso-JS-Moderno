@@ -93,10 +93,43 @@ function mostrarPlatillos(platillos) {
         categoria.classList.add('col-md-3');
         categoria.textContent =categorias[platillo.categoria] ;
 
+        const inputCantidad = document.createElement('INPUT');
+        inputCantidad.type = 'number';
+        inputCantidad.min = 0;
+        inputCantidad.id = `producto-${platillo.id}`;
+        inputCantidad.classList.add('form-control');
+        inputCantidad.value = 0;
+
+        //Funcion que detecta la cantidad y el platillo agregado
+        inputCantidad.onchange = function() {
+            const cantidad = parseInt(inputCantidad.value) ;
+            agregarPlatillo({...platillo, cantidad});
+        };
+
+        const agregar = document.createElement('DIV');
+        agregar.classList.add('col-md-2');
+        agregar.appendChild(inputCantidad)
+
         row.appendChild(nombre);
         row.appendChild(precio);
         row.appendChild(categoria);
+        row.appendChild(agregar);
+
 
         contenido.appendChild(row);
     })
+}
+
+function agregarPlatillo(producto) {
+    //Extraer el pedido actual
+    let {pedido} = cliente;
+
+    //Revisar que la cantidad sea mayor que 0
+    if(producto.cantidad > 0) {
+        cliente.pedido = [...pedido, producto];
+    }else {
+        console.log('No es mayor que 0')
+    }
+
+    console.log(cliente.pedido)
 }
