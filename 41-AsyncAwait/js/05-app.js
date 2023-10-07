@@ -1,33 +1,30 @@
-// Async Await Con una API...
+const url = 'https://picsum.photos/list';
 
 document.addEventListener('DOMContentLoaded', obtenerDatos);
 
-
 // function obtenerDatos() {
-//     fetch('https://picsum.photos/list') 
-//         .then( respuesta => {
-//             return respuesta.json()
-//         }) 
-//         .then(resultado => {
-//             mostrarHTML(resultado);
-//             console.log(resultado)
-//         })
+//     fetch(url)
+//       .then(respuesta => respuesta.json())
+//         .then(resultado => console.log(resultado))
+//         .catch(error => console.log(error));
+//     } 
+
+
+
+// async function obtenerDatos() {
+//     const respuesta = await fetch(url);
+//     const resultado = await respuesta.json();
+//     console.log(resultado);
 // }
- 
-async function obtenerDatos() {
-    const resultado = await fetch('https://picsum.photos/list');
-    const respuesta = await resultado.json();
-    console.log(respuesta);
 
-}
 
+// Esta sería la mejor sintaxis
 async function obtenerDatos() {
     try {
-        const resultado = await fetch('https://picsum.photos/list');
-        const respuesta = await resultado.json();
-        console.log(respuesta);
-    } catch (error) {
+        const respuesta = await fetch(url);
+        const resultado = await respuesta.json();
+        console.log(resultado);
+    } catch(error) {
         console.log(error);
     }
-
 }

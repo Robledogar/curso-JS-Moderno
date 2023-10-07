@@ -51,11 +51,14 @@ function mostrarHTML(datos) {
     let html = '';
 
     datos.forEach(perfil => {
-        const {author, post_url} = perfil;
+        const {author, post_url, author_url} = perfil;
 
         html += `
             <p>Author: ${author}</p>
+            <a href="${author_url}" target="_blank">url autor</a>
+            <br><br>
             <a href="${post_url}" target="_blank">Ver imagen</a>
+            <br><br><br>
         
         
         `

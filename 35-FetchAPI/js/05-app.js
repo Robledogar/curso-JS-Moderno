@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', obtenerDatos);
+const generoAFiltrar = 'Card Game';
 
 async function obtenerDatos() {
-    const url = 'https://free-to-play-games-database.p.rapidapi.com/api/filter?tag=3d.mmorpg.fantasy.pvp&platform=pc';
+    const url = 'https://free-to-play-games-database.p.rapidapi.com/api/games';
 const options = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': 'secret personal key',
+		'X-RapidAPI-Key': 'abc53a0f92msh299d98b1d590ba0p13b940jsn8354fb309e66',
 		'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com'
 	}
 };
@@ -14,11 +15,15 @@ try {
 	const response = await fetch(url, options);
 	const result = await response.json();
 
+    console.log(result);
+
     const contenido = document.querySelector('.contenido');
 
     let html = '';
 
-    result.forEach(juego => {
+    const juegosFiltrados = result.filter(juego => juego.genre === generoAFiltrar);
+
+    juegosFiltrados.forEach(juego => {
                 const {title, genre, developer, thumbnail, short_description} = juego;
         
                 html += `

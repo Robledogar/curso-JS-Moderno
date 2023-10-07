@@ -1,30 +1,30 @@
-// Async Await con Function Declaration
-
-function usuarioAutenticado() {
+function descargarClientes() {
     return new Promise((resolve, reject) => {
-        const autenticado = true;
+        const error = false;
 
-        setTimeout( () => {
-            if(autenticado) {
-                resolve('El Usuario esta autenticado'); 
+        setTimeout(() => {
+            if(!error) {
+                resolve('El listado de clientes se descargó correctamente');
             } else {
-                reject('Las credenciales son incorrectas');
-                
-            }            
+                reject('Error en la conexión');
+            }
         }, 3000);
-
-    });
+    })
 }
 
 // Async await
-const login = async () => {
+const ejecutar = async () => { // O así async function ejecutar() => {}
     try {
-        const respuesta = await usuarioAutenticado();
-        console.log(respuesta);
+        console.log(1+1);
+       const respuesta = await descargarClientes(); 
+
+       console.log(2+2);
+
+       console.log(respuesta);
+
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
 }
 
-
-login();
+ejecutar();
