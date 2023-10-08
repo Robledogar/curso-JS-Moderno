@@ -1,18 +1,3 @@
 {
-  "clientes": [
-    {
-      "nombre": "Jose Luis",
-      "email": "cyberjosines@gmail.com",
-      "telefono": "4354534534",
-      "empresa": "Fenproject",
-      "id": 3
-    },
-    {
-      "nombre": "Silvia",
-      "email": "robledogar@gmail.com",
-      "telefono": "656962647",
-      "empresa": "Casa",
-      "id": 4
-    }
-  ]
+  "clientes": []
 }
