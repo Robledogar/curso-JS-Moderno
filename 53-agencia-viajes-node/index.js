@@ -7,12 +7,16 @@ const app = express();
 //Definir puerto
 const port = process.env.PORT || 4000;
 
+//Habilitar PUG
+app.set('view engine', 'pug');
+
+//Definir la carpeta public
+app.use(express.static('public'));
 
 //Agregar router
 app.use('/', router);
 
-//Habilitar PUG
-app.set('view engine', 'pug');
+
 
 
 app.listen(port, () => {
